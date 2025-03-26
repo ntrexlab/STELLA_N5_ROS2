@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>stella_hailo_rpi5_ros2_examples</name>
+  <version>1.0.0</version>
+  <description>ROS2 package bassed on hailo-rpi5-example for STELLA.</description>
+  <maintainer email="lab@ntrex.co.kr">NTREX LAB</maintainer>
+  <license>MIT License</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>opencv_python</exec_depend>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>setuptools</buildtool_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
