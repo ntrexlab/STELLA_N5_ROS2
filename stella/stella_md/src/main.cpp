@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
 
   MW_Serial_Connect("/dev/MW", 115200);
 
-  if(Robot_Setting(::N2)) RUN = true;
+  if(Robot_Setting(::N1)) RUN = true;
   Robot_Fault_Checking_RESET();
   
   rclcpp::spin(std::make_shared<stellaN1_node>());
