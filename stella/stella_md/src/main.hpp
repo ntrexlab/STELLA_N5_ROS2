@@ -11,11 +11,11 @@
 using namespace std::chrono_literals;
 using std::placeholders::_1;
 
-class stellaN1_node : public rclcpp::Node
+class stellaN5_node : public rclcpp::Node
 {
 public:
-    stellaN1_node();
-    ~stellaN1_node();
+    stellaN5_node();
+    ~stellaN5_node();
 
 private:
 

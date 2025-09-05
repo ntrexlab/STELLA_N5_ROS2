@@ -22,29 +22,29 @@ inline double pulse2meter()
   return meter; //엔코더 역상
 }
 
-stellaN1_node::stellaN1_node() : Node("stella_md_node")
+stellaN5_node::stellaN5_node() : Node("stella_md_node")
 {
   auto qos = rclcpp::QoS(rclcpp::KeepLast(10));
 
-  ahrs_yaw_sub_ = this->create_subscription<std_msgs::msg::Float64>("imu/yaw", 1, std::bind(&stellaN1_node::ahrs_yaw_data_callback, this, std::placeholders::_1));
-  cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel", 10, std::bind(&stellaN1_node::command_velocity_callback, this, std::placeholders::_1));
+  ahrs_yaw_sub_ = this->create_subscription<std_msgs::msg::Float64>("imu/yaw", 1, std::bind(&stellaN5_node::ahrs_yaw_data_callback, this, std::placeholders::_1));
+  cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel", 10, std::bind(&stellaN5_node::command_velocity_callback, this, std::placeholders::_1));
   odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("odom", qos);
   odom_broadcaster = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
 
-  Serial_timer = this->create_wall_timer(1ms, std::bind(&stellaN1_node::serial_callback, this));
+  Serial_timer = this->create_wall_timer(1ms, std::bind(&stellaN5_node::serial_callback, this));
 }
 
-stellaN1_node::~stellaN1_node()
+stellaN5_node::~stellaN5_node()
 {
   MW_Serial_DisConnect();
 }
 
-void stellaN1_node::ahrs_yaw_data_callback(const std_msgs::msg::Float64::SharedPtr msg)
+void stellaN5_node::ahrs_yaw_data_callback(const std_msgs::msg::Float64::SharedPtr msg)
 {
   ahrs_yaw = msg->data;
 }
 
-void stellaN1_node::command_velocity_callback(const geometry_msgs::msg::Twist::SharedPtr cmd_vel_msg)
+void stellaN5_node::command_velocity_callback(const geometry_msgs::msg::Twist::SharedPtr cmd_vel_msg)
 {
   if(RUN)
   {
@@ -55,7 +55,7 @@ void stellaN1_node::command_velocity_callback(const geometry_msgs::msg::Twist::S
   }
 }
 
-void stellaN1_node::serial_callback()
+void stellaN5_node::serial_callback()
 {
   if(RUN)
   {
@@ -66,7 +66,7 @@ void stellaN1_node::serial_callback()
   }
 }
 
-bool stellaN1_node::update_odometry()
+bool stellaN5_node::update_odometry()
 {
 
   delta_left = Limit_i((MyMotorCommandReadValue.position[channel_1] - left_encoder_prev), 0, 15000) * pulse2meter();
@@ -140,10 +140,10 @@ int main(int argc, char *argv[])
 
   MW_Serial_Connect("/dev/MW", 115200);
 
-  if(Robot_Setting(::N1)) RUN = true;
+  if(Robot_Setting(::N5)) RUN = true;
   Robot_Fault_Checking_RESET();
   
-  rclcpp::spin(std::make_shared<stellaN1_node>());
+  rclcpp::spin(std::make_shared<stellaN5_node>());
 
   rclcpp::shutdown();
   return 0;
